@@ -7,8 +7,8 @@ export abstract class CrudService<
 > {
   constructor(protected readonly repository: BaseRepository<K, T>) {}
 
-  async findAll(): Promise<T[]> {
-    return this.repository.findAll();
+  async findAll(page?: number, limit?: number): Promise<T[]> {
+    return this.repository.findAll(page, limit);
   }
 
   async findById(id: K): Promise<T> {

@@ -1,0 +1,35 @@
+volumes:
+  app_data:
+    driver: local
+  postgres_data:
+    driver: local
+
+networks:
+  common-net: {}
+
+services:
+  app:
+    build: .
+    ports:
+      - '${PORT}:${PORT}'
+    environment:
+      - PORT=${PORT}
+    depends_on:
+      - postgres
+    volumes:
+      - app_data:/usr/src/app
+      - /usr/src/app/node_modules
+  postgres:
+    image: 'postgres:13-alpine'
+    command: postgres -c 'max_connections=1000'
+    restart: always
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+      - ./log-directory:/var/lib/postgresql/data
+    ports:
+      - 5432:5432

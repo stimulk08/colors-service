@@ -1,0 +1,35 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ColorModel {
+  id: Int!
+  c_name: String!
+  c_hex: String!
+  c_rgb: String!
+}
+
+type Query {
+  findOne(id: Int!): ColorModel!
+  colorsByName(name: String!): [ColorModel!]!
+  colors(page: Int!): [ColorModel!]!
+}
+
+type Mutation {
+  createColor(createColorInput: CreateColorInput!): ColorModel!
+  updateColor(updateColorInput: UpdateColorInput!): ColorModel!
+  removeColor(id: Int!): ColorModel!
+}
+
+input CreateColorInput {
+  name: String!
+  hex: String!
+  rgb: String!
+}
+
+input UpdateColorInput {
+  name: String
+  hex: String
+  rgb: String
+  id: Int!
+}

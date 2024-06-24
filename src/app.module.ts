@@ -3,9 +3,11 @@ import { LoggerMiddleware } from '@core/middlewares/log.middleware';
 import TypeOrm from '@libs/typeorm/typeorm.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     ColorsModule,
     TypeOrm,
     GraphQLModule.forRoot<ApolloDriverConfig>({

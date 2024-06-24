@@ -8,10 +8,14 @@ export abstract class BaseTypeormRepository<
   T extends BaseDatabaseModel,
 > implements BaseRepository<K, T>
 {
-  constructor(private readonly repository: Repository<T>) {}
+  constructor(protected readonly repository: Repository<T>) {}
+  private pageSize = 5;
 
-  async findAll(): Promise<T[]> {
-    return this.repository.find();
+  async findAll(page?: number): Promise<T[]> {
+    const limit = this.pageSize;
+    const offset = page ? (page - 1) * limit : undefined;
+
+    return this.repository.find({ take: limit, skip: offset });
   }
 
   async findById(id: K): Promise<T | null> {

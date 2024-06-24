@@ -1,17 +1,24 @@
 import { Color } from '@apps/colors/entities/color.entity';
 import { BaseModel } from '@libs/typeorm/base.model';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Entity } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
 @ObjectType()
+@Entity()
 export class ColorModel extends BaseModel implements Color {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
+  @Field(() => Int)
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ type: String })
+  @Field(() => String)
   c_name: string;
 
-  @Field(() => Int, { description: 'Example field (placeholder)' })
+  @Column({ type: String })
+  @Field(() => String)
   c_hex: string;
 
-  @Field(() => Int, { description: 'Example field (placeholder)' })
+  @Column({ type: String })
+  @Field(() => String)
   c_rgb: string;
 }
