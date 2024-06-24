@@ -1,6 +1,7 @@
 import { CreateColorInput } from '@apps/colors/resolvers/dto/create-color.input';
 import { UpdateColorInput } from '@apps/colors/resolvers/dto/update-color.input';
 import { ColorsService } from '@apps/colors/services/colors.service';
+import { NotFoundException } from '@nestjs/common';
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ColorModel } from '../models/color.model';
 
@@ -15,8 +16,12 @@ export class ColorsResolver {
   }
 
   @Query(() => ColorModel)
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.colorsService.findById(id);
+  async findOne(@Args('id', { type: () => Int }) id: number) {
+    const color = await this.colorsService.findById(id);
+    if (!color) {
+      throw new NotFoundException('Color not found');
+    }
+    return color;
   }
 
   @Mutation(() => ColorModel)
